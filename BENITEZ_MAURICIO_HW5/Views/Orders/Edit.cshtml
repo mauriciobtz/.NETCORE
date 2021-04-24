@@ -1,0 +1,68 @@
+﻿@model BENITEZ_MAURICIO_HW5.Models.Order
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit Order</h1>
+
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="OrderID" />
+            <div class="form-group">
+                <label asp-for="OrderNumber" class="control-label"></label>
+                @Html.DisplayFor(Model => Model.OrderNumber, new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                <label asp-for="AppUser.FirstName" class="control-label"></label>
+                @Html.DisplayFor(Model => Model.AppUser.FirstName, new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                <label asp-for="AppUser.Email" class="control-label"></label>
+                @Html.DisplayFor(Model => Model.AppUser.Email, new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                <label asp-for="OrderDate" class="control-label"></label>
+                @Html.DisplayFor(Model => Model.OrderDate, new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                <label asp-for="OrderNotes" class="control-label"></label>
+                <input asp-for="OrderNotes" class="form-control" />
+                <span asp-validation-for="OrderNotes" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+<h5>Products on this Order</h5>
+<table class="table table-primary">
+    <tr>
+        <th>Title</th>
+        <th>Price</th>
+        <th>Quantity</th>
+        <th>Extended Price</th>
+    </tr>
+    @foreach (OrderDetail rd in Model.OrderDetails)
+    {
+        <tr>
+            <td>@Html.DisplayFor(ModelItem => rd.Product.ProductName)</td>
+            <td>@Html.DisplayFor(ModelItem => rd.ProductPrice)</td>
+            <td>@Html.DisplayFor(ModelItem => rd.Quantity)</td>
+            <td>@Html.DisplayFor(ModelItem => rd.ExtededPrice)</td>
+        </tr>
+    }
+</table>
+
+<div>
+    <a asp-action="Index" class="btn btn-info">Back to List</a>
+    <a asp-action="Create" asp-controller="OrderDetails" asp-route-orderid="@Model.OrderID" class="btn btn-warning">Add Another Item</a>
+    <a asp-action="Index" asp-controller="OrderDetails" asp-route-orderid="@Model.OrderID" class="btn btn-danger">Edit Existing Items</a>
+</div>
+
+
